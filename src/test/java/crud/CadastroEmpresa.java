@@ -13,6 +13,7 @@ import com.tor4.model.cadastro.Endereco;
 import com.tor4.model.cadastro.Estabelecimento;
 import com.tor4.model.cadastro.Produto;
 import com.tor4.model.movimentacao.NotaFiscal;
+import com.tor4.model.movimentacao.ProdutoNotaFiscal;
 
 import modulos.efdicms.manager.LeitorEfdIcms;
 
@@ -109,12 +110,13 @@ public class CadastroEmpresa {
 				"Sellene Comercio e Representações Ltda", "Delivery", end5, empresa);
 
 		
-		String ano = "2013";
+		String ano = "2021";
 		String emp = "SELLENE";
-		String estab = "LOJA03";
+		String estab = "SAO_MATEUS";
 		
         String anomes1 = ano.concat("01").concat(".txt");
 		
+        Path x1 = Paths.get("D:\\EMPRESAS".concat("\\").concat(emp).concat("\\").concat(estab).concat("\\SPED").concat("\\").concat(ano).concat("\\XML").concat("\\jan"));
 	    Path p1 = Paths.get("D:\\EMPRESAS".concat("\\").concat(emp).concat("\\").concat(estab).concat("\\SPED").concat("\\").concat(ano).concat("\\").concat(anomes1));
 		ImportaEfdIcms lerEfd = new ImportaEfdIcms();
 
@@ -122,16 +124,16 @@ public class CadastroEmpresa {
 		leitor.leitorSpedFiscal(p1, null,1L,0L);
 		
 		List<Produto> prods = lerEfd.getProduto(leitor);
-		List<NotaFiscal> docs = lerEfd.getNotasFiscais(leitor);
+		List<NotaFiscal> docs = lerEfd.getNotasFiscais(leitor, x1.toString());
 		
 		for(Produto p : prods){
-			loja3.adicionaProduto(p);
+			sao.adicionaProduto(p);
 		}
-		for(NotaFiscal d :  docs){			
-			loja3.adicionaNotasSaidas(d);	
+		for(NotaFiscal nota :  docs){			
+			sao.adicionaNotasSaidas(nota);				
 		}
 
-		loja3.setNotasFiscais(docs);
+		sao.setNotasFiscais(docs);
 
 		empresa.adicionaEstab(matriz);		
 		empresa.adicionaEstab(mega);

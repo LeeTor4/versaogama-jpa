@@ -20,7 +20,7 @@ public class ProdutoNotaFiscal implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name="est_id")
+	@Column(name="nota_id")
 	private Long idPai;
 	private String codProduto;
 	private String cfop;
