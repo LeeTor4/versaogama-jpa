@@ -57,8 +57,10 @@ public class DAO<T> {
 
 	public int contaTodos() {
 		
-		long result = (Long) em.createQuery("select count(n) from livro n")
+		long result = (Long) em.createQuery("select count(n) from LoteImportacaoSpedFiscal n")
 				.getSingleResult();
+		
+		
 		em.close();
 
 		return (int) result;

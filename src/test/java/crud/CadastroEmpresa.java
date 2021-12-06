@@ -3,6 +3,7 @@ package crud;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.cnpj.servico.ServicoCEP;
@@ -10,10 +11,13 @@ import com.tor4.dao.cadastro.EmpresaDao;
 import com.tor4.handler.ImportaEfdIcms;
 import com.tor4.model.cadastro.Empresa;
 import com.tor4.model.cadastro.Endereco;
+import com.tor4.model.cadastro.EquipamentoECF;
 import com.tor4.model.cadastro.Estabelecimento;
 import com.tor4.model.cadastro.Produto;
+import com.tor4.model.movimentacao.ItensMovDiario;
 import com.tor4.model.movimentacao.NotaFiscal;
-import com.tor4.model.movimentacao.ProdutoNotaFiscal;
+import com.tor4.model.movimentacao.ReducaoZ;
+import com.tor4.model.movimentacao.TotParciaisRDZ;
 
 import modulos.efdicms.manager.LeitorEfdIcms;
 
@@ -110,37 +114,140 @@ public class CadastroEmpresa {
 				"Sellene Comercio e Representações Ltda", "Delivery", end5, empresa);
 
 		
-		String ano = "2021";
-		String emp = "SELLENE";
-		String estab = "SAO_MATEUS";
+		List<EquipamentoECF> ecfsMegadiet = new ArrayList<EquipamentoECF>();
+		EquipamentoECF ecf1 = new EquipamentoECF();
+		ecf1.setCodModDocFiscal("2D");
+		ecf1.setModeloEquip("ECF"); 
+		ecf1.setNumSerieFabECF("BE090910100010021930");
+		ecf1.setNumECF("3");
+		ecfsMegadiet.add(ecf1);
 		
-        String anomes1 = ano.concat("01").concat(".txt");
+		EquipamentoECF ecf2 = new EquipamentoECF();
+		ecf2.setCodModDocFiscal("2D");
+		ecf2.setModeloEquip("ECF"); 
+		ecf2.setNumSerieFabECF("BE091210100011203011");
+		ecf2.setNumECF("4");
+		ecfsMegadiet.add(ecf2);
 		
-        Path x1 = Paths.get("D:\\EMPRESAS".concat("\\").concat(emp).concat("\\").concat(estab).concat("\\SPED").concat("\\").concat(ano).concat("\\XML").concat("\\jan"));
-	    Path p1 = Paths.get("D:\\EMPRESAS".concat("\\").concat(emp).concat("\\").concat(estab).concat("\\SPED").concat("\\").concat(ano).concat("\\").concat(anomes1));
-		ImportaEfdIcms lerEfd = new ImportaEfdIcms();
+		EquipamentoECF ecf3 = new EquipamentoECF();
+		ecf3.setCodModDocFiscal("2D");
+		ecf3.setModeloEquip("ECF"); 
+		ecf3.setNumSerieFabECF("BE091410100011250892");
+		ecf3.setNumECF("6");
+		ecfsMegadiet.add(ecf3);
+		
+		
+		List<EquipamentoECF> ecfsLoja03 = new ArrayList<EquipamentoECF>();
+		EquipamentoECF ecf1_loja03 = new EquipamentoECF();
+		ecf1_loja03.setCodModDocFiscal("2D");
+		ecf1_loja03.setModeloEquip("ECF"); 
+		ecf1_loja03.setNumSerieFabECF("1234");
+		ecf1_loja03.setNumECF("1");
+		ecfsLoja03.add(ecf1_loja03);
+		
+		EquipamentoECF ecf2_loja03 = new EquipamentoECF();
+		ecf2_loja03.setCodModDocFiscal("2D");
+		ecf2_loja03.setModeloEquip("ECF"); 
+		ecf2_loja03.setNumSerieFabECF("4321");
+		ecf2_loja03.setNumECF("2");
+		ecfsLoja03.add(ecf2_loja03);
+		
+		
+		EquipamentoECF ecf3_loja03 = new EquipamentoECF();
+		ecf3_loja03.setCodModDocFiscal("2D");
+		ecf3_loja03.setModeloEquip("ECF"); 
+		ecf3_loja03.setNumSerieFabECF("BE0107SC56000035178");
+		ecf3_loja03.setNumECF("3");
+		ecfsLoja03.add(ecf3_loja03);
+		
+		EquipamentoECF ecf4_loja03 = new EquipamentoECF();
+		ecf4_loja03.setCodModDocFiscal("2D");
+		ecf4_loja03.setModeloEquip("ECF"); 
+		ecf4_loja03.setNumSerieFabECF("BE0107SC56000035180");
+		ecf4_loja03.setNumECF("4");
+		ecfsLoja03.add(ecf4_loja03);
+		
+		EquipamentoECF ecf5_loja03 = new EquipamentoECF();
+		ecf5_loja03.setCodModDocFiscal("2D");
+		ecf5_loja03.setModeloEquip("ECF"); 
+		ecf5_loja03.setNumSerieFabECF("BE051175610000105333");
+		ecf5_loja03.setNumECF("5");
+		ecfsLoja03.add(ecf5_loja03);
+		
+		EquipamentoECF ecf6_loja03 = new EquipamentoECF();
+		ecf6_loja03.setCodModDocFiscal("2D");
+		ecf6_loja03.setModeloEquip("ECF"); 
+		ecf6_loja03.setNumSerieFabECF("BE051175610000105336");
+		ecf6_loja03.setNumECF("6");
+		ecfsLoja03.add(ecf6_loja03);
+		
+		
+		
+		
+		
+		loja3.setEquipEcf(ecfsLoja03);
+		mega.setEquipEcf(ecfsMegadiet);
 
-		LeitorEfdIcms leitor = new LeitorEfdIcms();		
-		leitor.leitorSpedFiscal(p1, null,1L,0L);
 		
-		List<Produto> prods = lerEfd.getProduto(leitor);
-		List<NotaFiscal> docs = lerEfd.getNotasFiscais(leitor, x1.toString());
 		
-		for(Produto p : prods){
-			sao.adicionaProduto(p);
-		}
-		for(NotaFiscal nota :  docs){			
-			sao.adicionaNotasSaidas(nota);				
-		}
+		
 
-		sao.setNotasFiscais(docs);
-
+		
+//		String ano = "2019";
+//		String emp = "SELLENE";
+//		String estab = "MEGADIET";
+//		
+//      String anomes1 = ano.concat("01").concat(".txt");
+//		
+//      Path x1 = Paths.get("D:\\EMPRESAS".concat("\\").concat(emp).concat("\\").concat(estab).concat("\\SPED").concat("\\").concat(ano).concat("\\XML").concat("\\jan"));
+//	    Path p1 = Paths.get("D:\\EMPRESAS".concat("\\").concat(emp).concat("\\").concat(estab).concat("\\SPED").concat("\\").concat(ano).concat("\\").concat(anomes1));
+//		ImportaEfdIcms lerEfd = new ImportaEfdIcms();
+//
+//		LeitorEfdIcms leitor = new LeitorEfdIcms();		
+//		leitor.leitorSpedFiscal(p1, null,1L,0L);
+//		
+//		List<Produto> prods = lerEfd.getProduto(leitor);
+//		List<NotaFiscal> docs = lerEfd.getNotasFiscais(leitor, x1.toString());
+//		List<ReducaoZ> reducoes = lerEfd.getReducoes(leitor);
+//		
+//		
+//		for(Produto p : prods){
+//			loja3.adicionaProduto(p);
+//		}
+//		for(NotaFiscal nota :  docs){			
+//			loja3.adicionaNotasSaidas(nota);				
+//		}
+//        
+//		for (EquipamentoECF equip : mega.getEquipEcf()) {
+//			for (ReducaoZ rdz : reducoes) {
+//				System.out.println(rdz.getId_ecf()+"|"+rdz.getNumCOO());
+//				equip.adicionaReducoes(rdz);
+//			}
+//
+//		}
+//	
+//		
+//		mega.setNotasFiscais(docs);
+		
+		
+		
 		empresa.adicionaEstab(matriz);		
 		empresa.adicionaEstab(mega);
 		empresa.adicionaEstab(sao);
 		empresa.adicionaEstab(harm);
 		empresa.adicionaEstab(loja3);
 		dao.adiciona(empresa);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		 

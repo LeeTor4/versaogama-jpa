@@ -15,8 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.tor4.model.movimentacao.NotaFiscal;
-import com.tor4.model.movimentacao.ProdutoNotaFiscal;
+import com.tor4.model.movimentacao.LoteImportacaoSpedFiscal;
 
 @Entity
 @Table(name = "tb_estabelecimento")
@@ -42,16 +41,16 @@ public class Estabelecimento implements Serializable {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="est_id")
+	private List<EquipamentoECF> equipsEcf = new ArrayList<EquipamentoECF>();
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name="est_id")
 	private List<Produto> produtos = new ArrayList<Produto>();
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name="est_id")
-	private List<NotaFiscal> notasFiscais = new ArrayList<NotaFiscal>();
+	private List<LoteImportacaoSpedFiscal> lotes = new ArrayList<LoteImportacaoSpedFiscal>();
 	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name="est_id")
-	private List<ProdutoNotaFiscal> produtosNota = new ArrayList<ProdutoNotaFiscal>();
-
 
 	public Estabelecimento() {
 
@@ -127,6 +126,17 @@ public class Estabelecimento implements Serializable {
 	}
 
     
+	public List<EquipamentoECF> getEquipEcf() {
+		return equipsEcf;
+	}
+
+	public void setEquipEcf(List<EquipamentoECF> equipsEcf) {
+		this.equipsEcf = equipsEcf;
+	}
+
+	public void adicionaEquipEcf(EquipamentoECF equipsEcf) {
+		this.equipsEcf.add(equipsEcf);
+	}
 	public List<Produto> getProduto() {
 		return produtos;
 	}
@@ -139,29 +149,15 @@ public class Estabelecimento implements Serializable {
 		this.produtos.add(produto);
 	}
 	
-	public List<NotaFiscal> getNotasFiscais() {
-		return notasFiscais;
+	public List<LoteImportacaoSpedFiscal> getLote() {
+		return lotes;
 	}
 
-	public void setNotasFiscais(List<NotaFiscal> notasFiscais) {
-		this.notasFiscais = notasFiscais;
-	}
-
-	public void adicionaNotasSaidas(NotaFiscal notasFiscais) {
-		this.notasFiscais.add(notasFiscais);
-	}
-
-	public List<ProdutoNotaFiscal> getProdNota() {
-		return produtosNota;
-	}
-
-	public void setProdNota(List<ProdutoNotaFiscal> produtosNota) {
-		this.produtosNota = produtosNota;
+	public void setLote(List<LoteImportacaoSpedFiscal> lote) {
+		this.lotes = lote;
 	}
 	
-	public void adicionaProdNota(ProdutoNotaFiscal produtosNota) {
-		this.produtosNota.add(produtosNota);
-	}
-	
-	
+    public void adicionarLote(LoteImportacaoSpedFiscal lote) {
+    	this.lotes.add(lote);
+    }
 }

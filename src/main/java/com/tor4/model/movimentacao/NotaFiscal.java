@@ -27,8 +27,10 @@ public class NotaFiscal implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(name="est_id")
+	@Column(name="lote_id")
 	private Long idPai;
+	private Long idEmp;
+	private Long idEst;
 	private String tipoOperacao;
 	private String especie;
 	private String indDocProprio;
@@ -65,6 +67,19 @@ public class NotaFiscal implements Serializable{
 	}
 	public void setIdPai(Long idPai) {
 		this.idPai = idPai;
+	}
+	
+	public Long getIdEmp() {
+		return idEmp;
+	}
+	public void setIdEmp(Long idEmp) {
+		this.idEmp = idEmp;
+	}
+	public Long getIdEst() {
+		return idEst;
+	}
+	public void setIdEst(Long idEst) {
+		this.idEst = idEst;
 	}
 	public String getTipoOperacao() {
 		return tipoOperacao;

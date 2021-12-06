@@ -22,6 +22,7 @@ public class ProdutoNotaFiscal implements Serializable{
 	private Long id;
 	@Column(name="nota_id")
 	private Long idPai;
+	private String numItem;
 	private String codProduto;
 	private String cfop;
 	private String cstA;
@@ -51,6 +52,15 @@ public class ProdutoNotaFiscal implements Serializable{
 	public void setIdPai(Long idPai) {
 		this.idPai = idPai;
 	}
+	
+	public String getNumItem() {
+		return numItem;
+	}
+
+	public void setNumItem(String numItem) {
+		this.numItem = numItem;
+	}
+
 	public String getCodProduto() {
 		return codProduto;
 	}
