@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.xml.bind.JAXBException;
@@ -16,9 +14,6 @@ import com.leetor4.model.nfe.DocumentoFiscalEltronico;
 import com.leetor4.model.nfe.Produtos;
 import com.tor4.dao.cadastro.EquipamentoEcfDao;
 import com.tor4.dao.metadados.BancoDados;
-import com.tor4.dao.movimentacao.EquipamentoCFeDao;
-import com.tor4.dao.movimentacao.NotaFiscalDao;
-import com.tor4.dao.movimentacao.ReducaoZDao;
 import com.tor4.model.cadastro.EquipamentoECF;
 import com.tor4.model.cadastro.Produto;
 import com.tor4.model.movimentacao.EquipamentoCFe;
@@ -188,15 +183,25 @@ public class ImportaEfdIcms {
 		return retorno;
 		
 	}
-
+    
 	public List<ReducaoZ> getReducoes(EntityManager em ,LeitorEfdIcms leitor,Long idEmp, Long idEst){
 		EquipamentoEcfDao dao = new EquipamentoEcfDao();
 		List<ReducaoZ> retorno = new ArrayList<ReducaoZ>();
+		
+		Long cont=0L;
+		if(banco.getIncremento(em, "tb_equipamentocfe") == 1) {
+			cont = banco.getIncremento(em, "tb_reducaoz")-1;
+			leitor.incRDZ(cont);
+		}else {
+			cont = banco.getIncremento(em, "tb_reducaoz");
+			leitor.incRDZ(cont);
+		}
 		for(RegC400 c400 : leitor.getRegsC400()){
 			EquipamentoECF equip = new EquipamentoECF();
+			
 			equip.setNumSerieFabECF(c400.getNumSerieFabECF());
 			
-			for(RegC405 c405 : leitor.getRegsC405()){
+			for(RegC405 c405 : c400.getRegsC405()){
 				ReducaoZ redz = new ReducaoZ();
 				
 				redz.setIdEmp(idEmp);
@@ -211,9 +216,7 @@ public class ImportaEfdIcms {
 				redz.setVlVendaBruta(BigDecimal.valueOf(c405.getVlVendaBruta()));
 				
 				for(RegC420 c420 : c405.getRegsC420()){
-					
 					TotParciaisRDZ totParcRdz = new TotParciaisRDZ();
-					
 					totParcRdz.setCodTotalizador(c420.getCodTotPar());
 					totParcRdz.setDescNumTotalizador(c420.getDescrNrTot());
 					totParcRdz.setNumTotalizador(c420.getNrTot());
@@ -231,18 +234,20 @@ public class ImportaEfdIcms {
 						item.setVlCofins(c425.getVlCofins());
 						
 						totParcRdz.adicionaItensMovDiario(item);
+						
+						
 					}
-					
-					
 					redz.adicionaTotParcRedZ(totParcRdz);
+					
+					
 				}
 				
-				
-				
 				equip.adicionaReducoes(redz);
-				retorno.add(redz);
+				retorno.add(redz);	
 				
 			}
+			
+			
 			
 		}
 		return retorno;
@@ -330,19 +335,18 @@ public class ImportaEfdIcms {
 	private Long idPaiEquipCFe(String numDOc, LeitorEfdIcms leitor) {
 		Long id = 0L;
 
-		 int num = Integer.valueOf(numDOc);
-         for(Long key : leitor.getMpC860().keySet()){			
-			
-			if(num >= Integer.valueOf(leitor.getMpC860().get(key).getDocInicial())
-					 && num <= Integer.valueOf(leitor.getMpC860().get(key).getDocFinal())) {
-				
-				if(key != null ) {
+		int num = Integer.valueOf(numDOc);
+		for (Long key : leitor.getMpC860().keySet()) {
+
+			if (num >= Integer.valueOf(leitor.getMpC860().get(key).getDocInicial())
+					&& num <= Integer.valueOf(leitor.getMpC860().get(key).getDocFinal())) {
+
+				if (key != null) {
 					id = key;
 				}
-				
-				//System.out.println(key +"|"+ leitor.getMpC860().get(key).getDocInicial()+"|"+ leitor.getMpC860().get(key).getDocFinal());
+
 			}
-		  }
+		}
 
 		return id;
 	}

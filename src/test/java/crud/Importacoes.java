@@ -40,7 +40,7 @@ public class Importacoes {
 		ReducaoZDao rdzDao = new ReducaoZDao();
 		EquipamentoCFeDao equipCfeDao = new EquipamentoCFeDao();
 		
-		String ano = "2019";
+		String ano = "2021";
 		String emp = "SELLENE";
 		String estab = "MEGADIET";
 		
