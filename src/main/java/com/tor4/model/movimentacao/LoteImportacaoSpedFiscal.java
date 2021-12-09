@@ -13,7 +13,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.PostUpdate;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "tb_importspedfiscal")
@@ -46,14 +50,17 @@ public class LoteImportacaoSpedFiscal  implements Serializable{
 	private String indAtiv;
 
 	@OneToMany(cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="lote_id")
 	private List<NotaFiscal> notasFiscais = new ArrayList<NotaFiscal>();
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="lote_id")
 	private List<ReducaoZ>    reducoes = new ArrayList<>();
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="lote_id")
 	private List<EquipamentoCFe>    equipamentosCfe = new ArrayList<EquipamentoCFe>();
 	

@@ -14,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "tb_totaisparcrdz")
 public class TotParciaisRDZ implements Serializable{
@@ -34,6 +37,7 @@ public class TotParciaisRDZ implements Serializable{
 	
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="id_itensmovdiario")
 	private List<ItensMovDiario>   itensMovimentoDiario = new ArrayList<>();
 	

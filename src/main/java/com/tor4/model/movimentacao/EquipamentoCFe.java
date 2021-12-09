@@ -16,6 +16,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "tb_equipamentocfe")
 public class EquipamentoCFe implements Serializable{
@@ -37,6 +40,7 @@ public class EquipamentoCFe implements Serializable{
 	private String    docFinal;
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="equip_id")
 	private List<ItensMovDiarioCFe> itensDiarioCFe = new ArrayList<ItensMovDiarioCFe>();
 	

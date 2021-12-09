@@ -16,6 +16,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "tb_notafiscal")
 public class NotaFiscal implements Serializable{
@@ -50,6 +53,7 @@ public class NotaFiscal implements Serializable{
 	private String    chaveEletronica;
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="nota_id")
 	private List<ProdutoNotaFiscal> prodNota = new ArrayList<ProdutoNotaFiscal>();
 	

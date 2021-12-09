@@ -13,7 +13,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PostUpdate;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import com.tor4.model.movimentacao.LoteImportacaoSpedFiscal;
 
@@ -36,18 +40,22 @@ public class Estabelecimento implements Serializable {
 	private String nmFantasia;
 	
 	@OneToOne(cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="id_end")
     private Endereco end = new Endereco();
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="est_id")
 	private List<EquipamentoECF> equipsEcf = new ArrayList<EquipamentoECF>();
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="est_id")
 	private List<Produto> produtos = new ArrayList<Produto>();
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="est_id")
 	private List<LoteImportacaoSpedFiscal> lotes = new ArrayList<LoteImportacaoSpedFiscal>();
 	

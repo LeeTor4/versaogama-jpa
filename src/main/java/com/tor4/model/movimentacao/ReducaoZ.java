@@ -16,6 +16,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Table(name = "tb_reducaoz")
 public class ReducaoZ implements Serializable{
@@ -36,10 +39,12 @@ public class ReducaoZ implements Serializable{
 	private BigDecimal             vlVendaBruta;
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="id_totparc")
 	private List<TotParciaisRDZ>   totaisParcReducoesZ = new ArrayList<TotParciaisRDZ>();
 	
 	@OneToMany(cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="id_totdiariocf")
 	private List<TotalizadorDiarioCuponsFiscais> totaisCuponsFiscais = new ArrayList<TotalizadorDiarioCuponsFiscais>();
 	
