@@ -11,8 +11,10 @@ import com.tor4.dao.cadastro.EmpresaDao;
 import com.tor4.dao.cadastro.EstabelecimentoDao;
 import com.tor4.dao.cadastro.ProdutoDao;
 import com.tor4.dao.movimentacao.EquipamentoCFeDao;
+import com.tor4.dao.movimentacao.HistoricoItensDao;
 import com.tor4.dao.movimentacao.LoteImportacaoEfdIcmsDao;
 import com.tor4.dao.movimentacao.NotaFiscalDao;
+import com.tor4.dao.movimentacao.ProdutoNotaDao;
 import com.tor4.dao.movimentacao.ReducaoZDao;
 import com.tor4.handler.ImportaEfdIcms;
 import com.tor4.model.cadastro.Empresa;
@@ -20,11 +22,14 @@ import com.tor4.model.cadastro.EquipamentoECF;
 import com.tor4.model.cadastro.Estabelecimento;
 import com.tor4.model.cadastro.Produto;
 import com.tor4.model.movimentacao.EquipamentoCFe;
+import com.tor4.model.movimentacao.HistoricoItens;
 import com.tor4.model.movimentacao.LoteImportacaoSpedFiscal;
 import com.tor4.model.movimentacao.NotaFiscal;
+import com.tor4.model.movimentacao.ProdutoNotaFiscal;
 import com.tor4.model.movimentacao.ReducaoZ;
 import com.tor4.util.JPAUtil;
 
+import modulos.efdicms.entidades.RegC100;
 import modulos.efdicms.manager.LeitorEfdIcms;
 
 public class Importacoes {
@@ -39,6 +44,7 @@ public class Importacoes {
 		NotaFiscalDao nfDao = new NotaFiscalDao();
 		ReducaoZDao rdzDao = new ReducaoZDao();
 		EquipamentoCFeDao equipCfeDao = new EquipamentoCFeDao();
+		HistoricoItensDao histDao = new HistoricoItensDao();
 		
 		String ano = "2019";
 		String emp = "SELLENE";
@@ -84,15 +90,20 @@ public class Importacoes {
 		
 		
         Empresa empresa = empDao.buscaPorId(1L);
-		Estabelecimento sao = estDao.buscaPorId(3L);
+		Estabelecimento mega = estDao.buscaPorId(2L);
 		
-		LoteImportacaoSpedFiscal loteImportacao = lerEfd.getLoteImportacao(leitor,empresa.getId(),sao.getId());
-		List<Produto> prods = lerEfd.getProduto(leitor, empresa.getId(),sao.getId());
-		List<NotaFiscal> docs = lerEfd.getNotasFiscais(em,leitor, x.toString(), empresa.getId(),sao.getId());
-		List<ReducaoZ> reducoes = lerEfd.getReducoes(em,leitor, empresa.getId(),sao.getId());
+		LoteImportacaoSpedFiscal loteImportacao = lerEfd.getLoteImportacao(leitor,empresa.getId(),mega.getId());
+		List<Produto> prods = lerEfd.getProduto(leitor, empresa.getId(),mega.getId());
+		List<NotaFiscal> docs = lerEfd.getNotasFiscais(em,leitor, x.toString(), empresa.getId(),mega.getId());
+		List<ReducaoZ> reducoes = lerEfd.getReducoes(em,leitor, empresa.getId(),mega.getId());
 		
-		List<EquipamentoCFe> equipCFe = lerEfd.getEquipamentosCFe(em,leitor, x.toString(), empresa.getId(),sao.getId());
+		List<EquipamentoCFe> equipCFe = lerEfd.getEquipamentosCFe(em,leitor, x.toString(), empresa.getId(),mega.getId());
 
+		lerEfd.getHistoricoItensNotasSped(em,leitor, x.toString(), empresa.getId(),mega.getId());
+		lerEfd.getHistoricoItensNotasXml(em,leitor, x.toString(), empresa.getId(),mega.getId());
+		List<HistoricoItens> historicoItensNotas = lerEfd.getListHistItem();
+		
+		
 		
 		importDao.adiciona(loteImportacao);
 		
@@ -110,7 +121,13 @@ public class Importacoes {
 		for(EquipamentoCFe equip :  equipCFe){
 			equipCfeDao.adiciona(equip);
 		}
+		
+	    for(HistoricoItens hist : historicoItensNotas){
+	    	//System.out.println(hist.getOperacao() + "|" + hist.getCodItem() + "|" + hist.getChaveDoc());
+	    	histDao.adiciona(hist);
+	    }
 
+		
 	}
 
 }

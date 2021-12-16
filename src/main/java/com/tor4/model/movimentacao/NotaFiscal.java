@@ -194,6 +194,9 @@ public class NotaFiscal implements Serializable{
 	public List<ProdutoNotaFiscal> getProdNota() {
 		return prodNota;
 	}
+	public void setProdNota(List<ProdutoNotaFiscal> prodNota) {
+		this.prodNota = prodNota;
+	}
 	
 	
 }

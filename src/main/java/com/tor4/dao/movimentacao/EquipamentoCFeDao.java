@@ -3,7 +3,6 @@ package com.tor4.dao.movimentacao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 
 import com.tor4.dao.DAO;
 import com.tor4.model.movimentacao.EquipamentoCFe;

@@ -30,6 +30,7 @@ public class ProdutoNotaFiscal implements Serializable{
 	private String  unidadeMedida;
 	private BigDecimal quantidade;
 	private BigDecimal valorBruto;
+	private BigDecimal vlUnitItem;
 	private BigDecimal valorSeguro;
 	private BigDecimal valorDesconto;
 	private BigDecimal valorDespesas;
@@ -103,6 +104,15 @@ public class ProdutoNotaFiscal implements Serializable{
 	public void setValorBruto(BigDecimal valorBruto) {
 		this.valorBruto = valorBruto;
 	}
+	
+	public BigDecimal getVlUnitItem() {
+		return vlUnitItem;
+	}
+
+	public void setVlUnitItem(BigDecimal vlUnitItem) {
+		this.vlUnitItem = vlUnitItem;
+	}
+
 	public BigDecimal getValorSeguro() {
 		return valorSeguro;
 	}
@@ -134,5 +144,11 @@ public class ProdutoNotaFiscal implements Serializable{
 		this.csosn = csosn;
 	}
 	
+	public Double getQtde() {
+		return quantidade.doubleValue();
+	}
 	
+	public Double getVlBruto() {
+		return valorBruto.doubleValue();
+	}
 }

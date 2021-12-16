@@ -64,6 +64,11 @@ public class LoteImportacaoSpedFiscal  implements Serializable{
 	@JoinColumn(name="lote_id")
 	private List<EquipamentoCFe>    equipamentosCfe = new ArrayList<EquipamentoCFe>();
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name="lote_id")
+	private List<HistoricoItens>    histItens = new ArrayList<HistoricoItens>();
+	
 	public LoteImportacaoSpedFiscal() {
 
 	}
@@ -246,6 +251,18 @@ public class LoteImportacaoSpedFiscal  implements Serializable{
 	
 	public void adicionaEquipamentoCfe(EquipamentoCFe equipCfe) {
 		equipamentosCfe.add(equipCfe);
+	}
+
+	public List<HistoricoItens> getHistItens() {
+		return histItens;
+	}
+
+	public void setHistItens(List<HistoricoItens> histItens) {
+		this.histItens = histItens;
+	}
+	
+	public void adicionaHistItem(HistoricoItens histItens) {
+       this.histItens.add(histItens);
 	}
 	
 }
