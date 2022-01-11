@@ -23,6 +23,7 @@ import com.tor4.model.cadastro.Estabelecimento;
 import com.tor4.model.cadastro.Produto;
 import com.tor4.model.movimentacao.EquipamentoCFe;
 import com.tor4.model.movimentacao.HistoricoItens;
+import com.tor4.model.movimentacao.LoteImportacaoSpedFiscal;
 import com.tor4.util.JPAUtil;
 
 import modulos.efdicms.entidades.RegC860;
@@ -34,8 +35,9 @@ public class ConsultaXMLs {
 		
 		  ImportaEfdIcms lerEfd = new ImportaEfdIcms();
         
-//		 Map<Long, RegC860> mpC860 = new HashMap<Long, RegC860>();
-//		 LeitorEfdIcms leitor = new LeitorEfdIcms();
+		 Map<Long, RegC860> mpC860 = new HashMap<Long, RegC860>();
+		 LeitorEfdIcms leitor = new LeitorEfdIcms();
+		 
 //		 for(RegC860 regC860 : leitor.getRegsC860()){			 
 //			 mpC860.put(regC860.getId(), regC860);
 //		 }
@@ -49,11 +51,11 @@ public class ConsultaXMLs {
 	      String estab = "MEGADIET";
 		  String anomes1 = ano.concat("01").concat(".txt");
 		 
-		  Path x1 = Paths.get("D:\\EMPRESAS".concat("\\").concat(emp).concat("\\").concat(estab).concat("\\SPED").concat("\\").concat(ano).concat("\\XML").concat("\\jan"));
-		  Path p1 = Paths.get("D:\\EMPRESAS".concat("\\").concat(emp).concat("\\").concat(estab).concat("\\SPED").concat("\\").concat(ano).concat("\\").concat(anomes1));
-			
-		  Path p = p1;
-		  Path x = x1;
+//		  Path x1 = Paths.get("D:\\EMPRESAS".concat("\\").concat(emp).concat("\\").concat(estab).concat("\\SPED").concat("\\").concat(ano).concat("\\XML").concat("\\jan"));
+//		  Path p1 = Paths.get("D:\\EMPRESAS".concat("\\").concat(emp).concat("\\").concat(estab).concat("\\SPED").concat("\\").concat(ano).concat("\\").concat(anomes1));
+//			
+//		  Path p = p1;
+//		  Path x = x1;
 			
 
 		  
@@ -66,6 +68,13 @@ public class ConsultaXMLs {
 //		  }
 		  
  
+//		  for(int i = 2; i < 5; i++){
+//			  
+//			  String p="p";
+//			  String x="x";
+//			  System.out.println(p+i);
+//			  System.out.println(x+i);
+//		  }
 	}
 
 }

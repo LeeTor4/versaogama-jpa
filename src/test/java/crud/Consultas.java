@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 
 import com.tor4.dao.metadados.BancoDados;
+import com.tor4.dao.movimentacao.HistoricoItensDao;
+import com.tor4.model.movimentacao.HistoricoItens;
 import com.tor4.dao.movimentacao.NotaFiscalDao;
 import com.tor4.dao.movimentacao.ProdutoNotaDao;
 import com.tor4.model.movimentacao.NotaFiscal;
@@ -29,14 +31,16 @@ public class Consultas {
 		
 
 		
-		//System.out.println(bd.getIncremento(em, "tb_equipamentocfe"));
+		System.out.println(bd.getIncremento("tb_reducaoz"));
+		
 	    Set<String> listaProdEntradas = new LinkedHashSet<String>();
 	    Set<String> listaProdSaidas = new LinkedHashSet<String>();
 	    Set<String> listaProdutos = new LinkedHashSet<String>();
 	    ProdutoNotaDao  pNFDao = new ProdutoNotaDao();		
-		for (int x = 0; x < pNFDao.listaTodos().size(); x++) {
-
-			listaProdutos.add(pNFDao.listaTodos().get(x).getCodProduto());
+	    HistoricoItensDao histDao = new HistoricoItensDao();
+//		for (int x = 0; x < pNFDao.listaTodos().size(); x++) {
+//
+//			listaProdutos.add(pNFDao.listaTodos().get(x).getCodProduto());
 //			if(pNFDao.listaTodos().get(x).getCfop().startsWith("1")
 //					|| pNFDao.listaTodos().get(x).getCfop().startsWith("2")) {
 //				listaProdEntradas.add(pNFDao.listaTodos().get(x).getCodProduto());
@@ -44,37 +48,66 @@ public class Consultas {
 //					|| pNFDao.listaTodos().get(x).getCfop().startsWith("6")) {
 //				listaProdSaidas.add(pNFDao.listaTodos().get(x).getCodProduto());
 //			}
-
-		}
+//
+//		}
 		
 		Double qtdeEntSum = 0.0;
 		Double vlEntTotalSum = 0.0;
 		Double qtdeSaiSum = 0.0;
 		Double vlSaiTotalSum = 0.0;
 		DecimalFormat df = new DecimalFormat("#,###.00");
-		for (String prod : listaProdutos) {
-			//if (prod.equals("28276")) {}
-				qtdeEntSum = pNFDao.listaTodos().stream().filter(c -> c.getCodProduto().equals(prod))
-						.filter(c -> (c.getCfop().startsWith("1") || c.getCfop().startsWith("2")))
-						.mapToDouble(ProdutoNotaFiscal::getQtde).sum();
-				vlEntTotalSum = pNFDao.listaTodos().stream().filter(c -> c.getCodProduto().equals(prod))
-						.filter(c -> (c.getCfop().startsWith("1") || c.getCfop().startsWith("2")))
-						.mapToDouble(ProdutoNotaFiscal::getVlBruto).sum();
-
-				
-				qtdeSaiSum = pNFDao.listaTodos().stream().filter(c -> c.getCodProduto().equals(prod))
-						.filter(c -> (c.getCfop().startsWith("5") || c.getCfop().startsWith("6")))
-						.mapToDouble(ProdutoNotaFiscal::getQtde).sum();
-				vlSaiTotalSum = pNFDao.listaTodos().stream().filter(c -> c.getCodProduto().equals(prod))
-						.filter(c -> (c.getCfop().startsWith("5") || c.getCfop().startsWith("6")))
-						.mapToDouble(ProdutoNotaFiscal::getVlBruto).sum();
-			
-				System.out.println("Item: " + prod + "|" + qtdeEntSum +"|"+ df.format(vlEntTotalSum)+ "|" + qtdeSaiSum +"|"+ df.format(vlSaiTotalSum)+"|" + (qtdeEntSum-qtdeSaiSum));
-		}		
+//		for (String prod : listaProdutos) {
+//			//if (prod.equals("28276")) {}
+//				qtdeEntSum = pNFDao.listaTodos().stream().filter(c -> c.getCodProduto().equals(prod))
+//						.filter(c -> (c.getCfop().startsWith("1") || c.getCfop().startsWith("2")))
+//						.mapToDouble(ProdutoNotaFiscal::getQtde).sum();
+//				vlEntTotalSum = pNFDao.listaTodos().stream().filter(c -> c.getCodProduto().equals(prod))
+//						.filter(c -> (c.getCfop().startsWith("1") || c.getCfop().startsWith("2")))
+//						.mapToDouble(ProdutoNotaFiscal::getVlBruto).sum();
+//
+//				
+//				qtdeSaiSum = pNFDao.listaTodos().stream().filter(c -> c.getCodProduto().equals(prod))
+//						.filter(c -> (c.getCfop().startsWith("5") || c.getCfop().startsWith("6")))
+//						.mapToDouble(ProdutoNotaFiscal::getQtde).sum();
+//				vlSaiTotalSum = pNFDao.listaTodos().stream().filter(c -> c.getCodProduto().equals(prod))
+//						.filter(c -> (c.getCfop().startsWith("5") || c.getCfop().startsWith("6")))
+//						.mapToDouble(ProdutoNotaFiscal::getVlBruto).sum();
+//			
+//				System.out.println("Item: " + prod + "|" + qtdeEntSum +"|"+ df.format(vlEntTotalSum)+ "|" + qtdeSaiSum +"|"+ df.format(vlSaiTotalSum)+"|" + (qtdeEntSum-qtdeSaiSum));
+//		}		
 
 		
 	
 		    
+		
+		
+    String prod = "5257";
+
+	qtdeEntSum = histDao.listaTodos().stream().filter(c -> c.getCodItem().equals(prod))
+			.filter(c -> (c.getOperacao().equals("E") && c.getIdPaiLote().equals(1L)))
+			.map(HistoricoItens:: getQtde).mapToDouble(BigDecimal::doubleValue).sum();
+	
+	vlEntTotalSum = histDao.listaTodos().stream().filter(c -> c.getCodItem().equals(prod))
+			.filter(c -> (c.getOperacao().equals("E")&& c.getIdPaiLote().equals(1L)))
+			.map(HistoricoItens:: getVlLiq).mapToDouble(BigDecimal::doubleValue).sum();
+
+	
+	qtdeSaiSum = histDao.listaTodos().stream().filter(c -> c.getCodItem().equals(prod))
+			.filter(c -> (c.getOperacao().equals("S")&& c.getIdPaiLote().equals(1L)))
+			.map(HistoricoItens:: getQtde).mapToDouble(BigDecimal::doubleValue).sum();
+	vlSaiTotalSum = histDao.listaTodos().stream().filter(c -> c.getCodItem().equals(prod))
+			.filter(c -> (c.getOperacao().equals("S")&& c.getIdPaiLote().equals(1L)))
+			.map(HistoricoItens:: getVlLiq).mapToDouble(BigDecimal::doubleValue).sum();
+
+	System.out.println("Item: " + prod + "|" + qtdeEntSum +"|"+ df.format(vlEntTotalSum)+ "|" + qtdeSaiSum +"|"+ df.format(vlSaiTotalSum)+"|" + (qtdeEntSum-qtdeSaiSum));
+
+
+		
+		
+	
+		
+		
+		
 		
 		
 		

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.PostUpdate;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.OnDelete;
@@ -68,6 +68,11 @@ public class LoteImportacaoSpedFiscal  implements Serializable{
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name="lote_id")
 	private List<HistoricoItens>    histItens = new ArrayList<HistoricoItens>();
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@OnDelete(action = OnDeleteAction.CASCADE)
+	@JoinColumn(name="lote_id")
+	private List<SaldoItensTotalizadoPorLote> saldoPorLote = new ArrayList<SaldoItensTotalizadoPorLote>();
 	
 	public LoteImportacaoSpedFiscal() {
 
@@ -264,5 +269,36 @@ public class LoteImportacaoSpedFiscal  implements Serializable{
 	public void adicionaHistItem(HistoricoItens histItens) {
        this.histItens.add(histItens);
 	}
+
+	public List<SaldoItensTotalizadoPorLote> getSaldoPorLote() {
+		return saldoPorLote;
+	}
+
+	public void setSaldoPorLote(List<SaldoItensTotalizadoPorLote> saldoPorLote) {
+		this.saldoPorLote = saldoPorLote;
+	}
+	
+	public void adicionaSaldoPorLote(SaldoItensTotalizadoPorLote saldoPorLote) {
+	       this.saldoPorLote.add(saldoPorLote);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(cnpj, dtFin, dtIni);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LoteImportacaoSpedFiscal other = (LoteImportacaoSpedFiscal) obj;
+		return Objects.equals(cnpj, other.cnpj) && Objects.equals(dtFin, other.dtFin)
+				&& Objects.equals(dtIni, other.dtIni);
+	}
+	
 	
 }

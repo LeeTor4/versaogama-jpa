@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "tb_historico_item")
@@ -25,9 +26,10 @@ public class HistoricoItens {
 	private String      operacao;
 	private String      ecfCx;
 	private LocalDate   dtDoc;
+	private String      numItem;
 	private String      codItem;
 	private String      codAntItem;
-	private Double      qtde;
+	private BigDecimal  qtde;
 	private String      und;
 	private BigDecimal  vlUnit;
 	private BigDecimal  vlBruto;
@@ -37,6 +39,7 @@ public class HistoricoItens {
 	private String      cfop;
 	private BigDecimal  aliqIcms;
 	private String      codMod;
+	private String      codSitDoc;
 	private String      descricao;
 	private String      numDoc;
 	private String      chaveDoc;
@@ -95,6 +98,13 @@ public class HistoricoItens {
 	public String getCodItem() {
 		return codItem;
 	}
+	
+	public String getNumItem() {
+		return numItem;
+	}
+	public void setNumItem(String numItem) {
+		this.numItem = numItem;
+	}
 	public void setCodItem(String codItem) {
 		this.codItem = codItem;
 	}
@@ -104,10 +114,10 @@ public class HistoricoItens {
 	public void setCodAntItem(String codAntItem) {
 		this.codAntItem = codAntItem;
 	}
-	public Double getQtde() {
+	public BigDecimal getQtde() {
 		return qtde;
 	}
-	public void setQtde(Double qtde) {
+	public void setQtde(BigDecimal qtde) {
 		this.qtde = qtde;
 	}
 	public String getUnd() {
@@ -163,6 +173,13 @@ public class HistoricoItens {
 	}
 	public void setCodMod(String codMod) {
 		this.codMod = codMod;
+	}
+	
+	public String getCodSitDoc() {
+		return codSitDoc;
+	}
+	public void setCodSitDoc(String codSitDoc) {
+		this.codSitDoc = codSitDoc;
 	}
 	public String getDescricao() {
 		return descricao;

@@ -23,6 +23,10 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(name = "tb_reducaoz")
 public class ReducaoZ implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3051680276873866905L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long                   id;
