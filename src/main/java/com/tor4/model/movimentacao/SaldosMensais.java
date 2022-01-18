@@ -19,7 +19,9 @@ public class SaldosMensais {
 	private String ano;
 	private String mes;
 	private Double totQtdeEnt;
+	private Double totVlEnt;
 	private Double totQteSai;
+	private Double totVlSai;
 	private Double saldo;
 	
 	
@@ -71,6 +73,18 @@ public class SaldosMensais {
 	public void setSaldo(Double saldo) {
 		this.saldo = saldo;
 	}
+	public Double getTotVlEnt() {
+		return totVlEnt;
+	}
+	public void setTotVlEnt(Double totVlEnt) {
+		this.totVlEnt = totVlEnt;
+	}
+	public Double getTotVlSai() {
+		return totVlSai;
+	}
+	public void setTotVlSai(Double totVlSai) {
+		this.totVlSai = totVlSai;
+	}
 	
-
+    
 }

@@ -3,8 +3,10 @@ package com.tor4.dao.cadastro;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import com.tor4.dao.DAO;
+import com.tor4.dao.metadados.BancoDados;
 import com.tor4.model.cadastro.Produto;
 import com.tor4.util.JPAUtil;
 
@@ -40,5 +42,13 @@ private EntityManager em = JPAUtil.getEntityManager();
 
 	public int contaTodos() {
 		return dao.contaTodos();
+	}
+	
+	public Produto buscaPorCodigo(String codigo) {
+		EntityManager em = JPAUtil.getEntityManager();
+		String sql = "SELECT * FROM tb_produto where codUtilizEstab = " + "'"+ codigo + "'";
+		Query query =  em.createNativeQuery(sql, Produto.class);
+		Produto singleResult = (Produto) query.getSingleResult();
+		return singleResult;
 	}
 }

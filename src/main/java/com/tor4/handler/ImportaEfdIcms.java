@@ -314,7 +314,7 @@ public class ImportaEfdIcms {
 	}
 
 	public List<EquipamentoCFe> getEquipamentosCFe(EntityManager em, LeitorEfdIcms leitor, String file, Long idEmp,
-			Long idEst) {
+			Long idEst,Long lote) {
 
 		ParseDocXML parseDocXML = new ParseDocXML();
 		File f = new File(file);
@@ -323,7 +323,7 @@ public class ImportaEfdIcms {
 		for (RegC860 regC860 : leitor.getRegsC860()) {
 			EquipamentoCFe equip = new EquipamentoCFe();
 			equip.setCodModDocFiscal(regC860.getCodModDocFiscal());
-			equip.setIdPai(banco.getIncremento( "tb_importspedfiscal"));
+			equip.setIdPai(lote);
 			equip.setDocInicial(regC860.getDocInicial());
 			equip.setDocFinal(regC860.getDocFinal());
 			equip.setDtEmissao(regC860.getDtEmissao());

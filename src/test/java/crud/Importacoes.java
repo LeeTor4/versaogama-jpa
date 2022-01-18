@@ -27,6 +27,7 @@ import com.tor4.model.cadastro.Estabelecimento;
 import com.tor4.model.cadastro.Produto;
 import com.tor4.model.exportacoes.ExportaQuantitativosMensaisDeEstoque;
 import com.tor4.model.exportacoes.ExportaQuantitativosMensaisDeEstoque2;
+import com.tor4.model.exportacoes.ExportaQuantitativosMensaisDeEstoque3;
 import com.tor4.model.movimentacao.EquipamentoCFe;
 import com.tor4.model.movimentacao.HistoricoItens;
 import com.tor4.model.movimentacao.LoteImportacaoSpedFiscal;
@@ -84,7 +85,7 @@ public class Importacoes {
 		List<Produto> prods = lerEfd.getProduto(x.toString(),leitor, empresa.getId(),mega.getId());
 		List<NotaFiscal> docs = lerEfd.getNotasFiscais(em,leitor, x.toString(), empresa.getId(),mega.getId(),leitor.incLoteImportacao(id0000));
 		List<ReducaoZ> reducoes = lerEfd.getReducoes(em,leitor, empresa.getId(),mega.getId(),leitor.incLoteImportacao(id0000));		
-		List<EquipamentoCFe> equipCFe = lerEfd.getEquipamentosCFe(em,leitor, x.toString(), empresa.getId(),mega.getId());		
+		List<EquipamentoCFe> equipCFe = lerEfd.getEquipamentosCFe(em,leitor, x.toString(), empresa.getId(),mega.getId(),leitor.incLoteImportacao(id0000));		
 		List<HistoricoItens> historicos = lerEfd.getHistoricoItens(em,leitor, x.toString(), empresa.getId(),mega.getId(),leitor.incLoteImportacao(id0000));
 		
 		List<SaldoItensTotalizadoPorLote> saldoItensPorLote = lerEfd.getSaldoItensPorLote(leitor, lerEfd.getListaProdutos(),historicos,leitor.incLoteImportacao(id0000));
@@ -133,9 +134,9 @@ public class Importacoes {
 		HistoricoItensDao histDao = new HistoricoItensDao();
 		SaldoItensTotalizadoPorLoteDao saldoDao = new SaldoItensTotalizadoPorLoteDao();
 		
-		ExportaQuantitativosMensaisDeEstoque exportacao = new ExportaQuantitativosMensaisDeEstoque();
+		ExportaQuantitativosMensaisDeEstoque3 exportacao = new ExportaQuantitativosMensaisDeEstoque3();
 		
-		String ano = "2018";
+		String ano = "2019";
 		String emp = "SELLENE";
 		String estab = "MEGADIET";
 		String cnpj  = "05329222000419";
@@ -190,8 +191,8 @@ public class Importacoes {
 	    Path p12 = Paths.get("E:\\EMPRESAS".concat("\\").concat(emp).concat("\\").concat(estab).concat("\\SPED").concat("\\").concat(ano).concat("\\").concat(anomes12));
 	    
 
-	    Path p = p3;
-		Path x = x3;
+	    Path p = p12;
+		Path x = x12;
 		
 		
 		Long id0000 = 0L;
@@ -236,15 +237,15 @@ public class Importacoes {
 	
 		//System.out.println(loteImportacao.getCnpj()+"|"+loteImportacao.getDtFin().getYear()+"|"+ loteImportacao.getDtFin().getMonthValue());
 		
-		if(!importDao.listaTodos().contains(loteImportacao)) {
-			importDao.adiciona(loteImportacao);
-			importaRegistrosEfdIcms(em, x, leitor, lerEfd, empresa, mega, id0000);
-		}else {
-			System.out.println("Lote já importado!!!");
-		}
+//		if(!importDao.listaTodos().contains(loteImportacao)) {
+//			importDao.adiciona(loteImportacao);
+//			importaRegistrosEfdIcms(em, x, leitor, lerEfd, empresa, mega, id0000);
+//		}else {
+//			System.out.println("Lote já importado!!!");
+//		}
 
-//		String dirPlanilha  = "E:\\EMPRESAS".concat("\\").concat(emp).concat("\\").concat(estab).concat("\\CONTROLE_ESTOQUE_".concat(cnpj).concat("_").concat(ano).concat(".csv"));
-//		exportacao.exportaControleQuantitativosMensais(dirPlanilha,ano,cnpj);
+		String dirPlanilha  = "E:\\EMPRESAS".concat("\\").concat(emp).concat("\\").concat(estab).concat("\\CONTROLE_ESTOQUE_".concat(cnpj).concat("_").concat(ano).concat(".csv"));
+		exportacao.exportaControleQuantitativosMensais(dirPlanilha,ano,cnpj);
 	}
 
 }
